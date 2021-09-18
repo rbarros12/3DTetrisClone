@@ -2,46 +2,53 @@
 
 public class Tetromino : MonoBehaviour
 {
-    public Vector3 rotationPoint;
-    private float fallTime;
-
-    public float fallSpeed = 0.8f;
-    public static int height = 30;
-    public static int width = 15;
-
-    private static Transform[,] grid = new Transform[width, height];
-
-    private bool placed = false;
-    public int score = 0;
-
     private SpawnTetrominoes spawnTetrominoes;
     private GameManager gameManager;
 
-    void Start()
+    private bool tetrominoIsPlaced = false;
+    private float fallTime;
+
+    public float fallSpeed = 0.8f;
+    public Vector3 rotationPoint;
+
+    [SerializeField] private float boardLimitHeight = 28.0f;
+    public static int height = 30;
+    public static int width = 15;
+    private static Transform[,] grid = new Transform[width, height];
+
+    public int score = 0;
+
+    private void Start()
     {
         spawnTetrominoes = FindObjectOfType<SpawnTetrominoes>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
-    void Update()
+    private void Update()
+    {
+        TetrominoControl();
+        GameOverCheck();
+    }
+
+    private void TetrominoControl()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Move(-1, 0);
+            MoveTetromino(-1, 0);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Move(1, 0);
+            MoveTetromino(1, 0);
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Rotate();
+            RotateTetromino();
         }
 
         if (Time.time - fallTime > (Input.GetKey(KeyCode.DownArrow) ? fallSpeed / 10 : fallSpeed))
         {
             transform.position += new Vector3(0, -1, 0);
-            if (!CheckBorder())
+            if (!CheckBoardBorder())
             {
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
@@ -50,35 +57,29 @@ public class Tetromino : MonoBehaviour
                 this.enabled = false;
                 spawnTetrominoes.SpawnTetromino();
             }
+
             fallTime = Time.time;
         }
-
-        if (transform.position.y > 28.0f && placed)
-        {
-            spawnTetrominoes.gameOver = true;
-            gameManager.GameOver();
-            AddToGrid();
-        }
     }
 
-    void Move(int dx, int dy)
+    private void MoveTetromino(int directionX, int directionY)
     {
-        transform.position += new Vector3(dx, dy, 0);
+        transform.position += new Vector3(directionX, directionY, 0);
 
-        if (!CheckBorder())
+        if (!CheckBoardBorder())
         {
-            transform.position -= new Vector3(dx, dy, 0);
+            transform.position -= new Vector3(directionX, directionY, 0);
         }
     }
 
-    void Rotate()
+    private void RotateTetromino()
     {
         transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
-        if (!CheckBorder())
+        if (!CheckBoardBorder())
             transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
     }
 
-    void CheckForLines()
+    private void CheckForLines()
     {
         for (int i = height - 1; i >= 0; i--)
         {
@@ -90,7 +91,7 @@ public class Tetromino : MonoBehaviour
         }
     }
 
-    bool HasLine(int i)
+    private bool HasLine(int i)
     {
         for (int j = 0; j < width; j++)
         {
@@ -101,7 +102,7 @@ public class Tetromino : MonoBehaviour
         return true;
     }
 
-    void DeleteLine(int i)
+    private void DeleteLine(int i)
     {
         for (int j = 0; j < width; j++)
         {
@@ -111,7 +112,7 @@ public class Tetromino : MonoBehaviour
         gameManager.Scored();
     }
 
-    void RowDown(int i)
+    private void RowDown(int i)
     {
         for (int y = i; y < height; y++)
         {
@@ -127,8 +128,7 @@ public class Tetromino : MonoBehaviour
         }
     }
 
-
-    void AddToGrid()
+    private void AddToGrid()
     {
         foreach (Transform block in transform)
         {
@@ -137,11 +137,11 @@ public class Tetromino : MonoBehaviour
 
             grid[roundedX, roundedY] = block;
 
-            placed = true;
+            tetrominoIsPlaced = true;
         }
     }
 
-    bool CheckBorder()
+    private bool CheckBoardBorder()
     {
         foreach (Transform block in transform)
         {
@@ -160,4 +160,13 @@ public class Tetromino : MonoBehaviour
         return true;
     }
 
+    private void GameOverCheck()
+    {
+        if (transform.position.y > boardLimitHeight && tetrominoIsPlaced)
+        {
+            spawnTetrominoes.isGameOver = true;
+            gameManager.GameOver();
+            AddToGrid();
+        }
+    }
 }
