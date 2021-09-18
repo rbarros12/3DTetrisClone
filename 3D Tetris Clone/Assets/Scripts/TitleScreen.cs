@@ -3,13 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
-    [SerializeField] private string gameplaySceneName = "Gameplay";
-
-    private void Update()
+    void Update()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            SceneManager.LoadScene(gameplaySceneName);
+            SceneManager.LoadScene("Gameplay");
         }
 
         if (Input.GetKey(KeyCode.Escape))
