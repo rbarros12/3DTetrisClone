@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleScreen : MonoBehaviour
+public class TitleScreenManager : MonoBehaviour
 {
     [SerializeField] private string gameplaySceneName = "Gameplay";
 

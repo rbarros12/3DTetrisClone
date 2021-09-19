@@ -62,7 +62,7 @@ public class Tetromino : MonoBehaviour
         }
     }
 
-    private void MoveTetromino(int directionX, int directionY)
+    public void MoveTetromino(int directionX, int directionY)
     {
         transform.position += new Vector3(directionX, directionY, 0);
 
