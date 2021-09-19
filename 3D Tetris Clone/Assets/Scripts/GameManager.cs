@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int score = 0;
-    public Text scoreText;
+    public TMP_Text scoreText;
 
     public GameObject menuPanel;
-    public Text panelText;
+    public TMP_Text menuPanelText;
 
     public AudioSource audioSource;
     public AudioClip scoreSFX;
 
     private void Start()
     {
-        panelText.text = "Paused";
+        menuPanelText.text = "Paused";
         menuPanel.SetActive(false);
     }
 
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void PauseGame()
     {
-        panelText.text = "Paused";
+        menuPanelText.text = "Paused";
         if (Time.timeScale == 0)
         {
             Time.timeScale = 1;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         menuPanel.SetActive(true);
-        panelText.text = "Game Over";
+        menuPanelText.text = "Game Over";
         Time.timeScale = 0;
     }
 }

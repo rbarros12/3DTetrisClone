@@ -5,12 +5,18 @@ public class SpawnTetrominoes : MonoBehaviour
     public GameObject[] tetrominoes;
     private GameObject previewTetromino;
     private GameObject nextTetromino;
+    private Vector3 originalTetrominoScale;
+    [SerializeField] private Vector3 previewTetrominoPosition;
+    [SerializeField] private Vector3 previewTetrominoScale;
 
     public bool gameStarted = true;
     public bool isGameOver = false;
 
     private void Start()
     {
+        originalTetrominoScale = Vector3.one;
+        previewTetrominoPosition = new Vector3(1.3f, 28f, 0f);
+        previewTetrominoScale = new Vector3(0.5f, 0.5f, 0.5f);
         SpawnTetromino();
     }
 
@@ -29,6 +35,7 @@ public class SpawnTetrominoes : MonoBehaviour
             else
             {
                 previewTetromino.transform.localPosition = transform.position;
+                previewTetromino.transform.localScale = originalTetrominoScale;
                 nextTetromino = previewTetromino;
                 nextTetromino.GetComponent<Tetromino>().enabled = true;
             }
@@ -39,7 +46,8 @@ public class SpawnTetrominoes : MonoBehaviour
 
     private void ChangePreviewTetromino(int index)
     {
-        previewTetromino = Instantiate(tetrominoes[index], new Vector3(-6.75f, 25f, 0f), Quaternion.identity);
+        previewTetromino = Instantiate(tetrominoes[index], previewTetrominoPosition, Quaternion.identity);
+        previewTetromino.transform.localScale = previewTetrominoScale;
         previewTetromino.GetComponent<Tetromino>().enabled = false;
     }
 }
