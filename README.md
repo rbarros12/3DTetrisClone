@@ -22,4 +22,4 @@ Jogo desenvolvido na Unity 3D inspirado no clássico [Tetris](https://en.wikiped
 
 # Tecnologias utilizadas
 - Unity 3D
-- C#
+- C# 
