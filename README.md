@@ -13,7 +13,7 @@ Jogo desenvolvido na Unity 3D inspirado no clássico [Tetris](https://en.wikiped
 ## Objetivo
 - O jogador deve empilhar as peças de forma que elas completem uma linha horizontal
 - O jogador ganha pontos ao completar cada linha horizontal
-- Se a peça encaixada enconstar no topo, o jogador perde
+- Se a peça encaixada encostar no topo, o jogador perde
 
 ## Controles
 - Mover: 🠈 🠊
