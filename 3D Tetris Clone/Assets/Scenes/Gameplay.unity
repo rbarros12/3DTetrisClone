@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 563495836}
   - component: {fileID: 563495838}
   - component: {fileID: 563495837}
+  - component: {fileID: 563495839}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -592,6 +593,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563495835}
   m_CullTransparentMesh: 1
+--- !u!114 &563495839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563495835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58202909db9d4374e8d92455a33c9476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1193,7 @@ GameObject:
   - component: {fileID: 1365686664}
   - component: {fileID: 1365686663}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: TetrominoSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1206,8 +1219,8 @@ MonoBehaviour:
   - {fileID: 2490566922486801210, guid: 04ce4ac1ad06a2b4b9ef6bad1b03d147, type: 3}
   - {fileID: 8239596267059666920, guid: 92453872ae692de429f992e5445ba89e, type: 3}
   - {fileID: 7892840101972657957, guid: 44b13ffdccb6cef4fb00a5acdf33aff8, type: 3}
-  previewTetrominoPosition: {x: 0, y: 0, z: 0}
-  previewTetrominoScale: {x: 0, y: 0, z: 0}
+  nextTetrominoScale: {x: 0, y: 0, z: 0}
+  nextTetrominoPosition: {x: 0, y: 0, z: 0}
   gameStarted: 1
   isGameOver: 0
 --- !u!4 &1365686664
@@ -1634,8 +1647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a1770a9f3332644a3b3ea8d5cb97dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
-  scoreText: {fileID: 563495837}
   menuPanel: {fileID: 1592704439}
   menuPanelText: {fileID: 872585912}
   audioSource: {fileID: 1764036099}

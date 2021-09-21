@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using System;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int score = 0;
-    public TMP_Text scoreText;
+    public static event Action scoreChanger;
 
     public GameObject menuPanel;
     public TMP_Text menuPanelText;
@@ -30,14 +29,14 @@ public class GameManager : MonoBehaviour
 
     public void Scored()
     {
-        score++;
-        scoreText.text = score.ToString();
+        scoreChanger?.Invoke();
         audioSource.PlayOneShot(scoreSFX);
     }
 
     private void PauseGame()
     {
         menuPanelText.text = "Paused";
+
         if (Time.timeScale == 0)
         {
             Time.timeScale = 1;

@@ -3,11 +3,13 @@
 public class SpawnTetrominoes : MonoBehaviour
 {
     public GameObject[] tetrominoes;
-    private GameObject previewTetromino;
     private GameObject nextTetromino;
+    private GameObject holdTetromino;
+    private int tetrominoIndex;
+
     private Vector3 originalTetrominoScale;
-    [SerializeField] private Vector3 previewTetrominoPosition;
-    [SerializeField] private Vector3 previewTetrominoScale;
+    [SerializeField] private Vector3 nextTetrominoScale;
+    [SerializeField] private Vector3 nextTetrominoPosition;
 
     public bool gameStarted = true;
     public bool isGameOver = false;
@@ -15,8 +17,8 @@ public class SpawnTetrominoes : MonoBehaviour
     private void Start()
     {
         originalTetrominoScale = Vector3.one;
-        previewTetrominoPosition = new Vector3(1.3f, 28f, 0f);
-        previewTetrominoScale = new Vector3(0.5f, 0.5f, 0.5f);
+        nextTetrominoPosition = new Vector3(1.3f, 28f, 0f);
+        nextTetrominoScale = new Vector3(0.5f, 0.5f, 0.5f);
         SpawnTetromino();
     }
 
@@ -24,30 +26,29 @@ public class SpawnTetrominoes : MonoBehaviour
     {
         if (!isGameOver)
         {
-            int tetrominoIndex = Random.Range(0, tetrominoes.Length);
-
             if (gameStarted)
             {
                 gameStarted = false;
-
-                nextTetromino = Instantiate(tetrominoes[tetrominoIndex], transform.position, Quaternion.identity);
+                tetrominoIndex = Random.Range(0, tetrominoes.Length);
+                holdTetromino = Instantiate(tetrominoes[tetrominoIndex], transform.position, Quaternion.identity);
             }
             else
             {
-                previewTetromino.transform.localPosition = transform.position;
-                previewTetromino.transform.localScale = originalTetrominoScale;
-                nextTetromino = previewTetromino;
-                nextTetromino.GetComponent<Tetromino>().enabled = true;
+                nextTetromino.transform.localPosition = transform.position;
+                nextTetromino.transform.localScale = originalTetrominoScale;
+                holdTetromino = nextTetromino;
+                holdTetromino.GetComponent<Tetromino>().enabled = true;
             }
 
-            ChangePreviewTetromino(tetrominoIndex);
+            ChangeNextTetromino();
         }
     }
 
-    private void ChangePreviewTetromino(int index)
+    private void ChangeNextTetromino()
     {
-        previewTetromino = Instantiate(tetrominoes[index], previewTetrominoPosition, Quaternion.identity);
-        previewTetromino.transform.localScale = previewTetrominoScale;
-        previewTetromino.GetComponent<Tetromino>().enabled = false;
+        tetrominoIndex = Random.Range(0, tetrominoes.Length);
+        nextTetromino = Instantiate(tetrominoes[tetrominoIndex], nextTetrominoPosition, Quaternion.identity);
+        nextTetromino.transform.localScale = nextTetrominoScale;
+        nextTetromino.GetComponent<Tetromino>().enabled = false;
     }
 }

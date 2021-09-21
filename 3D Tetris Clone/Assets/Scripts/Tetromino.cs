@@ -11,12 +11,10 @@ public class Tetromino : MonoBehaviour
     public float fallSpeed = 0.8f;
     public Vector3 rotationPoint;
 
-    [SerializeField] private float boardLimitHeight = 28.0f;
+    public float boardLimitHeight = 28f;
     public static int height = 30;
     public static int width = 15;
     private static Transform[,] grid = new Transform[width, height];
-
-    public int score = 0;
 
     private void Start()
     {
@@ -48,6 +46,7 @@ public class Tetromino : MonoBehaviour
         if (Time.time - fallTime > (Input.GetKey(KeyCode.DownArrow) ? fallSpeed / 10 : fallSpeed))
         {
             transform.position += new Vector3(0, -1, 0);
+
             if (!CheckBoardBorder())
             {
                 transform.position -= new Vector3(0, -1, 0);
@@ -75,8 +74,11 @@ public class Tetromino : MonoBehaviour
     private void RotateTetromino()
     {
         transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+
         if (!CheckBoardBorder())
+        {
             transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+        }
     }
 
     private void CheckForLines()
@@ -109,6 +111,7 @@ public class Tetromino : MonoBehaviour
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }
+
         gameManager.Scored();
     }
 

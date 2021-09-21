@@ -15,7 +15,11 @@ Jogo desenvolvido na Unity 3D inspirado no clássico [Tetris](https://en.wikiped
 - O jogador ganha pontos ao completar cada linha horizontal
 - Se a peça encaixada enconstar no topo, o jogador perde
 
+## Controles
+- Mover: 🠈 🠊
+- Rotacionar: 🠉
+- Pausa: P
+
 # Tecnologias utilizadas
 - Unity 3D
 - C#
-
